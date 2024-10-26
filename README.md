@@ -3,7 +3,7 @@ Created the first RAG pipeline
 
 # Vertex AI Project
 
-## Steps Followed
+## Steps Followed :
 
 1. **Create a new Google account.**
 2. **Credits:** Received $300 in credits.
