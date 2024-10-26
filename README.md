@@ -23,7 +23,7 @@ Created the first RAG pipeline
 - This notebook generates embeddings for the statements in the uploaded PDFs.
 - The embeddings file is uploaded to GCS at the specified file path.
 - A vector search index is created using the URI of the embeddings file created in the previous step.
-- A Matching Index Endpoint is created and deployed.
+- A Matching Index Endpoint is created and deployed. Deployment takes around 20-25 minutes for a small PDF, but this time duration can vary based on the instance used and the size of the data.
 
 > **Important:** Make sure to pass the following parameters in the `deploy_index` function, or the deployment will not succeed:
    - `machine_type=machine_type`
