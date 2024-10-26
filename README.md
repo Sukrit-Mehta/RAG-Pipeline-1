@@ -1,50 +1,47 @@
 # RAG-Pipeline-1
 Created the first RAG pipeline
 
+# Vertex AI Project
 
-RAG Pipeline - GCP
+## Steps Followed
 
-Steps Followed => 
+1. **Create a new Google account.**
+2. **Credits:** Received $300 in credits.
+3. **Enable Vertex AI APIs.**
+4. **Create a bucket in Google Cloud Storage (GCS).**
+5. **Use Vertex AI Workbench:** 
+   - Alternatively, you can use a DataProc cluster with Jupyter Lab as an installed application.
+   - Create a Jupyter Notebook using a machine with specific configurations: 
+     [Vertex AI Workbench](https://console.cloud.google.com/vertex-ai/workbench/managed?authuser=6&walkthrough_id=vertex_index&project=robust-habitat-439810-p4)
 
-Create a new Google account.
+   > **Note:** It takes about 7-8 minutes to bring the Jupyter Notebook up.
 
-300$ credits received.
+## Notebooks Created
 
-Enable Vertex AI APIs
+### 1. `embeddings_gen_and_vector_index_deployment.ipynb`
 
-Create a bucket in GCS.
+- This notebook generates embeddings for the statements in the uploaded PDFs.
+- The embeddings file is uploaded to GCS at the specified file path.
+- A vector search index is created using the URI of the embeddings file created in the previous step.
+- A Matching Index Endpoint is created and deployed.
 
-Use Vertex AI Workbench [Instead can use DataProc cluster with Jupyter Lab as an installed application]
-Create a jupyter notebook(use the type of machine with specific configurations) :  https://console.cloud.google.com/vertex-ai/workbench/managed?authuser=6&walkthrough_id=vertex_index&project=robust-habitat-439810-p4
+> **Important:** Make sure to pass the following parameters in the `deploy_index` function, or the deployment will not succeed:
+   - `machine_type=machine_type`
+   - `min_replica_count=min_replica_count`
+   - `max_replica_count=max_replica_count`
 
-Takes 7-8 minutes to bring the jupyter notebook up.
+### 2. `perform_semantic_search_and_get_output.ipynb`
 
-Created 2 notebooks:
+- Initialize the vector search index.
+- Generate embeddings for user input.
+- Find nearest neighbors for the user input embeddings from the Matching Index Endpoint.
+- For example, if you get the IDs of 10 nearest neighbors:
+  - Look up these 10 UUIDs in the `sentences.json` file to retrieve the corresponding sentences for context creation.
+- The retrieved 10 sentences are now referred to as the **context**.
+- Create a prompt that injects the above-created context and invoke the model to get a response.
 
-embeddings_gen_and_vector_index_deployment.ipynb
-In this notebook, the embeddings are created for the uploaded PDF’s statements and the embeddings file is uploaded to the GCS at the specified file path.
-A vector search index is created with the uri of the embeddings file created in the earlier step.
-A Matching index endpoint is created and deployed as well. 
-Make sure to pass the below parameters in deploy_index function, otherwise deployment will not succeed.
+## Reference Tutorials Followed
 
- machine_type=machine_type,
-                        min_replica_count=min_replica_count,
- max_replica_count=max_replica_count
-
-
-perform_semantic_search_and_get_output.ipynb
-Initialise the vector sector search index
-Generate the embeddings for the user input.
-Find nearest neighbours for the user input embeddings from the matching index endpoint.
-Say, we got the IDs of 10 nearest neighbours.
-Now, look up for these 10 UUIDs in the sentences.json file and get the 10 sentences for context creation
-The paragraph 10 sentences is now referred to as the context.
-Now we need to create a prompt, inject the above created context and invoke the model to get the response.
-
-
-Reference tutorials followed : 
-
-https://www.youtube.com/watch?v=wGbZSErgEvg&ab_channel=JanakiramMSV
-https://www.youtube.com/watch?v=YlAWtEAJl9g&ab_channel=GoogleCloud
-https://www.youtube.com/watch?v=LF7I6raAIL4&ab_channel=GoogleforDevelopers
-
+- [Tutorial 1: Janakiram MSV](https://www.youtube.com/watch?v=wGbZSErgEvg&ab_channel=JanakiramMSV)
+- [Tutorial 2: Google Cloud](https://www.youtube.com/watch?v=YlAWtEAJl9g&ab_channel=GoogleCloud)
+- [Tutorial 3: Google for Developers](https://www.youtube.com/watch?v=LF7I6raAIL4&ab_channel=GoogleforDevelopers)
